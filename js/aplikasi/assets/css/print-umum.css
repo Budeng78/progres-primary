@@ -1,0 +1,105 @@
+/* resources\js\aplikasi\assets\css\print-umum.css */
+
+/* |--------------------------------------------------------------------------
+| Print General Styles (Cetak Umum)
+|--------------------------------------------------------------------------
+| Dioptimalkan untuk Legal, Times New Roman 12pt, Margin Kustom, dan Lebar Penuh Tabel.
+*/
+
+/* Styling standar untuk tampilan di layar (screen) */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* ------------------------------------------- */
+/* --- Media Query untuk Cetak (PRINT MODE)--- */
+/* ------------------------------------------- */
+@media print {
+    
+    /* 1. PENGATURAN KERTAS, FONT, DAN MARGIN */
+    
+    @page {
+        size: legal;
+        /* Mengatur margin: Atas 2cm, Kanan 2cm, Bawah 7cm, Kiri 2cm */
+        margin-top: 1cm;
+        margin-right: 2cm;
+        margin-bottom: 7cm; 
+        margin-left: 2cm;
+    }
+    
+    /* Menerapkan font dan ukuran yang diminta */
+    body, html, table, th, td, p, h1, h2, h3 {
+    font-family: 'Times New Roman', Times, serif !important;
+    font-size: 12pt !important;
+    color: #000 !important;
+    }
+    
+    /* 2. MENGHILANGKAN ELEMEN YANG TIDAK RELEVAN */
+
+    /* Mengandalkan class no-print, dropdown, dan modal-wrapper yang sudah diterapkan di React. */
+    .no-print,
+    .dropdown,
+    .modal-wrapper,
+    
+    /* Menargetkan semua elemen fixed/z-index tinggi sebagai pengaman tambahan */
+    .fixed,
+    [class*="z-"] { 
+        display: none !important;
+        visibility: hidden !important;
+        /* z-index -9999 dipertahankan untuk memastikan elemen fixed hilang total */
+        z-index: -9999 !important; 
+    }
+
+    /* 3. MENGHILANGKAN EFEK VISUAL */
+
+    /* Menghilangkan shadow dan background untuk menghemat tinta */
+    .bg-white,
+    .shadow-xl,
+    .rounded-2xl,
+    .bg-gray-100 {
+        box-shadow: none !important;
+        background-color: transparent !important;
+        border: none !important;
+    }
+    
+    /* Memastikan warna background pada thead dicetak */
+    thead {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* 4. PENYESUAIAN TABEL (MAKSIMALKAN LEBAR CETAK) */
+
+    #print-area {
+        /* Memicu lebar 100% dan menghilangkan batasan lebar maksimal */
+        width: 100% !important; 
+        max-width: none !important;
+        
+        /* Menghilangkan padding horizontal yang mungkin membatasi lebar di dalam container */
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Pastikan tabel itu sendiri mengambil lebar penuh dari #print-area */
+    .min-w-full {
+        width: 100% !important;
+        border-collapse: collapse;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Styling Border Tabel */
+    table {
+        border: 1px solid #000;
+    }
+    th, td {
+        border: 1px solid #ccc; 
+        padding: 6px 10px !important;
+    }
+    thead th {
+        font-weight: bold !important;
+    }
+}
